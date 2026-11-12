@@ -1,17 +1,38 @@
-# Document-Based Q&A System
+📄 Document-Based Q&A System
 
-A production-style full-stack web application where users upload a PDF or TXT document, store its extracted content in MongoDB, and ask questions that are answered strictly from that uploaded document.
+A full-stack web application that allows users to upload PDF and TXT documents, extract and store their content, and ask questions based on the uploaded documents.
 
-## Tech Stack
+The system uses keyword-based sentence matching to retrieve relevant answers directly from the uploaded document, without relying on external information.
 
-- Frontend: React.js, Vite, Tailwind CSS, Axios, React Router
-- Backend: Node.js, Express.js, Multer, pdf-parse
-- Database: MongoDB with Mongoose
+🚀 Features
 
-## Project Structure
+- Document Upload: Upload PDF and TXT files through a simple interface.
+- Text Extraction: Extract text from uploaded PDF and TXT documents.
+- Document Storage: Store extracted document content in MongoDB.
+- Interactive Q&A: Ask questions through a chat-style interface.
+- Keyword-Based Matching: Retrieve relevant sentences from the uploaded document.
+- Chat History: Save questions and answers with timestamps.
+- Previous Conversations: View the chat history associated with a document.
+- Clear Chat: Delete the saved chat history for a selected document.
+- Responsive UI: Modern interface with responsive layouts and reusable components.
 
-```text
-document-based-qa-system/
+🛠️ Tech Stack
+
+Category| Technologies
+Frontend| React.js, Vite
+Styling| Tailwind CSS
+Routing| React Router
+HTTP Requests| Axios
+Backend| Node.js, Express.js
+File Upload| Multer
+PDF Processing| pdf-parse
+Database| MongoDB
+ODM| Mongoose
+
+📂 Project Structure
+
+document-qa-system/
+│
 ├── backend/
 │   ├── src/
 │   │   ├── config/
@@ -22,8 +43,10 @@ document-based-qa-system/
 │   │   ├── services/
 │   │   ├── app.js
 │   │   └── server.js
+│   │
 │   ├── .env.example
 │   └── package.json
+│
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
@@ -32,97 +55,140 @@ document-based-qa-system/
 │   │   ├── App.jsx
 │   │   ├── index.css
 │   │   └── main.jsx
+│   │
 │   ├── .env.example
 │   ├── index.html
 │   ├── package.json
 │   ├── postcss.config.js
 │   ├── tailwind.config.js
 │   └── vite.config.js
+│
 └── README.md
-```
 
-## Features
+🔄 How It Works
 
-- Upload PDF or TXT documents using drag and drop
-- Extract text from the uploaded document
-- Save document content in MongoDB
-- Ask questions in a chat-style UI
-- Answer only from the uploaded document using keyword-based sentence matching
-- Save all questions and answers with timestamps
-- Load previous chat history for the current document
-- Clear chat history for a document
-- Modern interview-ready UI with gradients, rounded cards, and responsive layout
+1. The user uploads a PDF or TXT document.
+2. The backend processes the uploaded file and extracts its text.
+3. The extracted content is stored in MongoDB.
+4. The user enters a question related to the uploaded document.
+5. The backend splits the document content into sentences.
+6. Common stop words are removed from the question.
+7. The system calculates keyword overlap to identify relevant sentences.
+8. The matching sentence or sentences are returned as the answer.
+9. The question and answer are saved in MongoDB for future reference.
 
-## Backend APIs
+🔌 Backend API Endpoints
 
-### `POST /api/upload-document`
+Method| Endpoint| Description
+POST| "/api/upload-document"| Uploads a document and extracts its content
+POST| "/api/ask-question"| Finds an answer based on the uploaded document
+GET| "/api/get-response?documentId=<id>"| Retrieves chat history for a document
+DELETE| "/api/clear-chat/:documentId"| Clears chat history for a document
 
-Uploads a file using Multer, extracts text, stores the document in MongoDB, and returns the document ID.
+⚙️ Installation and Setup
 
-### `POST /api/ask-question`
+Prerequisites
 
-Accepts `documentId` and `question`, finds the best matching sentence from the uploaded document, stores the Q&A, and returns the answer.
+Make sure the following tools are installed:
 
-### `GET /api/get-response?documentId=<id>`
+- Node.js and npm
+- MongoDB (local installation or accessible MongoDB instance)
+- Git
 
-Returns all saved chat responses for the selected document.
+1. Clone the Repository
 
-### `DELETE /api/clear-chat/:documentId`
+git clone https://github.com/Veera-Teja/document-qa-system.git
+cd document-qa-system
 
-Clears the saved chat history for the selected document.
+2. Start MongoDB
 
-## How the Q&A Logic Works
+Make sure your MongoDB service is running.
 
-1. Extract the full text from the uploaded document.
-2. Split the document into sentences.
-3. Remove common stop words from the question.
-4. Score each sentence based on keyword overlap.
-5. Return the top one or two matching sentences from the uploaded content.
+Example local MongoDB connection string:
 
-## Setup Instructions
+MONGO_URI=mongodb://127.0.0.1:27017/document_qa_system
 
-### 1. Open the project
+3. Configure and Start the Backend
 
-```bash
-cd "Flyhii - task"
-```
-
-### 2. Start MongoDB
-
-Make sure MongoDB is running locally on:
-
-```bash
-mongodb://127.0.0.1:27017/document_qa_system
-```
-
-### 3. Backend setup
-
-```bash
 cd backend
 npm install
+
+Create a ".env" file by copying the example file:
+
+Windows Command Prompt:
+
 copy .env.example .env
+
+Configure the required environment variables in ".env" using the names specified in ".env.example".
+
+Start the backend:
+
 npm run dev
-```
 
-Backend runs on `http://localhost:5000`
+Backend URL:
 
-### 4. Frontend setup
+"http://localhost:5000"
+
+4. Configure and Start the Frontend
 
 Open a new terminal:
 
-```bash
 cd frontend
 npm install
+
+Create the environment file:
+
 copy .env.example .env
+
+Configure the frontend environment variables according to ".env.example".
+
+Start the frontend:
+
 npm run dev
-```
 
-Frontend runs on `http://localhost:5173`
+Frontend URL:
 
-## Interview-Friendly Explanation
+"http://localhost:5173"
 
-- The frontend is built in React with reusable components and Tailwind CSS for a polished UI.
-- The backend follows MVC with controllers, routes, services, and models.
-- Multer handles uploads, and `pdf-parse` extracts content from PDF files.
-- MongoDB stores both uploaded documents and the question-answer history.
-- The Q&A engine uses keyword matching, so answers always come from the uploaded document instead of external knowledge.
+🖥️ Application Screenshots
+
+Add screenshots of your running application below.
+
+Document Upload Interface
+
+"Document Upload Interface" (./Image1)
+
+Question and Answer Interface
+
+"Question and Answer Interface" (./Image2)
+
+Note: Update the image paths if your actual screenshot filenames or extensions are different.
+
+💡 Technical Highlights
+
+- Developed a full-stack application using React.js and Node.js.
+- Implemented RESTful APIs using Express.js.
+- Integrated MongoDB for document and conversation storage.
+- Implemented file upload handling using Multer.
+- Extracted PDF content using pdf-parse.
+- Organized backend code using controllers, routes, models, middleware, and services.
+- Implemented keyword-based sentence matching for document-specific question answering.
+
+🔮 Future Enhancements
+
+- Integrate semantic search for improved answer relevance.
+- Implement AI-powered document summarization.
+- Add user authentication and personalized document management.
+- Support additional document formats.
+- Improve information retrieval using text embeddings.
+
+👩‍💻 Author
+
+Komali Veerateja
+
+- GitHub: "Veera-Teja" (https://github.com/Veera-Teja)
+- LinkedIn: "Connect with me" (https://linkedin.com/in/teja-komali-98645729b)
+
+---
+
+⭐ If you find this project interesting, consider giving it a star!
